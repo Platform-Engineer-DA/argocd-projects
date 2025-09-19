@@ -1,0 +1,26 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: prod
+
+resources:
+- ../../base
+
+images:
+- name: marcoscianci/gitops
+  newName: marcoscianci/gitops
+  newTag: dev_17810326491
+
+namePrefix: gitops-
+nameSuffix: -prod
+
+labels:
+- includeSelectors: true
+  includeTemplates: true
+  pairs:
+    app: gitops
+    app.kubernetes.io/name: gitops
+    
+patches:
+- path: patch-host.yaml
+- path: patch-rollouts-labels.yaml
