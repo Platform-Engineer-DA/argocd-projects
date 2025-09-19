@@ -1,0 +1,78 @@
+name: GitOps ArgoCD Workflow
+
+on: 
+  push:
+    branches: [ develop, release/,  main] 
+    paths:
+      - 'gitops/**'
+      - '.github/workflows/**'
+
+jobs:
+
+    PROJECTS:
+        
+      runs-on: ubuntu-latest
+      permissions:
+        contents: write
+        
+      strategy:
+        fail-fast: false
+        matrix:
+          project: [ gitops ]
+          env:  [ dev, stg, prod ]
+          
+          include: 
+          - env: dev
+            environment: dev
+            project_root: gitops
+            overlay_dir: gitops/overlays
+            argocd_path: gitops/argocd-project
+          
+          - env: stg
+            environment: stg
+            project_root: gitops
+            overlay_dir: gitops/overlays
+            argocd_path: gitops/argocd-project
+           
+          - env: prod
+            environment: prod
+            project_root: gitops
+            overlay_dir: gitops/overlays
+            argocd_path: gitops/argocd-project
+        
+      concurrency:
+        group: cd-${{ matrix.project }}-${{ matrix.env }}
+        cancel-in-progress: false       
+
+      if: |
+          (matrix.env == 'dev' && startWith( github.ref, 'refs/head/develop')) ||
+          (matrix.env == 'stg' && (startsWith(github.ref, 'refs/heads/main') || startWith(github.ref, 'refs/head/release/'))) ||
+          (matrix.env == 'prod' && startsWith(github.ref, 'refs/tags/'))
+      
+      environment: ${{ matrix.environment }}
+      
+      steps:
+    
+        - name: Checkout
+          uses: actions/checkout@v4
+          with:
+            persistent-crendentials: false
+            
+        - name: ArgoCD Project Sync
+          uses: Platform-Engineer-DA/central-ci-cd/.github/actions/cd/argocd/oci_argocd_sync@main
+          with:
+            OCI_TENANCY_OCID:   ${{ secrets.OCI_TENANCY_OCID }}
+            OCI_USER_OCID:      ${{ secrets.OCI_USER_OCID }}
+            OCI_FINGERPRINT:    ${{ secrets.OCI_FINGERPRINT }}
+            OCI_REGION:         ${{ secrets.OCI_REGION }}
+            OCI_PRIVATE_KEY:    ${{ secrets.OCI_PRIVATE_KEY }}
+            OKE_CLUSTER_OCID:   ${{ secrets.OKE_CLUSTER_OCID }}
+            GIT_PAT:            ${{ secrets.GIT_PAT }}
+            GIT_USER:           ${{ secrets.GIT_USER }} 
+            ENV:                ${{ matrix.env }}
+            OVERLAY_DIR:        ${{ matrix.overlay_dir }}
+            ARGOCD_PATH:        ${{ matrix.argocd_path }}    
+            
+
+
+  
