@@ -16,6 +16,7 @@ jobs:
         contents: write
         
       strategy:
+        max-parallel: 1
         fail-fast: false
         matrix:
           project: [ gitops ]
