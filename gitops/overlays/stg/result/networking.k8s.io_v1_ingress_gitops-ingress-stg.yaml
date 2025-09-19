@@ -10,7 +10,7 @@ metadata:
   namespace: stg
 spec:
   rules:
-  - host: gitops-dev.codeia-ti.com.br
+  - host: gitops-stg.codeia-ti.com.br
     http:
       paths:
       - backend:
