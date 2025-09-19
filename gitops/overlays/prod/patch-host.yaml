@@ -4,7 +4,7 @@ metadata:
   name: ingress        # nome do base
 spec:
   rules:
-    - host: gitops-stg.codeia-ti.com.br
+    - host: gitops.codeia-ti.com.br
       http:
         paths:
           - path: /
