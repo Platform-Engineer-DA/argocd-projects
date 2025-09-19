@@ -2,7 +2,7 @@ apiVersion: v1
 stringData:
   username: ${GIT_USER}
   passoword: ${GIT_PAT}
-  project: gitops-${ENV}
+  project: gitops
   type: git
   url: https://github.com/Platform-Engineer-DA/argocd-projects.git
 kind: Secret
