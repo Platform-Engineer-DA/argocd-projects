@@ -21,7 +21,7 @@ spec:
         averageUtilization: 70
         type: Utilization
     type: Resource
-  minReplicas: 2
+  minReplicas: 3
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Rollout
