@@ -47,7 +47,5 @@ spec:
       backoff:
         duration: 5s
         factor: 2
-        maxDuration: 3m
-  orphanedResources:
-    warn: false  
+        maxDuration: 3m 
   revisionHistoryLimit: 10
