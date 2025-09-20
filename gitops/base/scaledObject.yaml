@@ -30,4 +30,4 @@ spec:
         timezone: America/Sao_Paulo
         start: "0 18 * * *"      # 18:00 todo dia
         end:   "0 9 * * *"       # 09:00 todo dia
-        desiredReplicas: "0"
+        desiredReplicas: "2"
