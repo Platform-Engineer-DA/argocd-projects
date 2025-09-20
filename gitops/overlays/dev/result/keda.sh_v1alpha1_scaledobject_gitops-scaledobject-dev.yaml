@@ -1,0 +1,45 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  labels:
+    app: gitops
+    app.kubernetes.io/name: gitops
+  name: gitops-scaledobject-dev
+  namespace: dev
+spec:
+  advanced:
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleDown:
+          policies:
+          - periodSeconds: 60
+            type: Percent
+            value: 50
+          stabilizationWindowSeconds: 60
+        scaleUp:
+          policies:
+          - periodSeconds: 60
+            type: Pods
+            value: 4
+          stabilizationWindowSeconds: 0
+      metrics:
+      - resource:
+          name: cpu
+          target:
+            averageUtilization: 70
+            type: Utilization
+        type: Resource
+      - resource:
+          name: memory
+          target:
+            averageUtilization: 75
+            type: Utilization
+        type: Resource
+  cooldownPeriod: 30
+  maxReplicasCount: 5
+  minReplicasCount: 2
+  pollingInterval: 15
+  scaleTargetRef:
+    apiVersion: argoproj.io/v1alpha1
+    kind: Rollout
+    name: gitops-rollout-dev
