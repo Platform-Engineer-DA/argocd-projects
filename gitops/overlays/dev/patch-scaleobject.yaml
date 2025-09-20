@@ -1,9 +1,0 @@
-apiVersion: keda.sh/v1alpha1
-kind: ScaleObject
-metadata:
-  name: scaleobject
-spec:
-  scaleTargetRef:
-    apiVersion: argoproj.io/v1alpha1
-    kind: Rollout 
-    name: gitops-rollout-dev
