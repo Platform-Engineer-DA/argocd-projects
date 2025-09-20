@@ -7,6 +7,34 @@ metadata:
   name: gitops-scaledobject-dev
   namespace: dev
 spec:
+  advanced:
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleDown:
+          policies:
+          - periodSeconds: 60
+            type: Percent
+            value: 50
+          stabilizationWindowSeconds: 60
+        scaleUp:
+          policies:
+          - periodSeconds: 60
+            type: Pods
+            value: 4
+          stabilizationWindowSeconds: 0
+      metrics:
+      - resource:
+          name: cpu
+          target:
+            averageUtilization: 70
+            type: Utilization
+        type: Resource
+      - resource:
+          name: memory
+          target:
+            averageUtilization: 75
+            type: Utilization
+        type: Resource
   cooldownPeriod: 30
   maxReplicasCount: 5
   minReplicasCount: 2
@@ -15,10 +43,3 @@ spec:
     apiVersion: argoproj.io/v1alpha1
     kind: Rollout
     name: gitops-rollout-dev
-  triggers:
-  - metadata:
-      metricName: http_requests_total
-      query: sum(rate(http_requests_total{app="gitops"}[2m]))
-      serverAddress: http://prometheus.monitoring.svc.cluster.local:9090
-      threshold: "100"
-    type: prometheus
