@@ -7,7 +7,7 @@ spec:
     apiVersion: argoproj.io/v1alpha1
     kind: Rollout 
     name: rollout
-  minReplicaCount: 2
+  minReplicaCount: 0
   maxReplicaCount: 5
   cooldownPeriod: 30
   pollingInterval: 15
