@@ -45,12 +45,8 @@ spec:
     name: gitops-rollout-dev
   triggers:
   - metadata:
-      desiredReplicas: "0"
-      schedule: 0 18 * * *
-      timezone: America/Sao_Paulo
-    type: cron
-  - metadata:
       desiredReplicas: "2"
-      schedule: 0 9 * * *
+      end: 0 18 * * *
+      start: 0 9 * * *
       timezone: America/Sao_Paulo
     type: cron

@@ -15,12 +15,8 @@ spec:
     - type: cron
       metadata:
         timezone: America/Sao_Paulo
-        schedule: "0 18 * * *"
-        desiredReplicas: "0"
-    - type: cron
-      metadata:
-        timezone: America/Sao_Paulo
-        schedule: "0 9 * * *"
+        start: "0 9 * * *"        # começa às 09:00
+        end:   "0 18 * * *"       # termina às 18:00
         desiredReplicas: "2"
   advanced:
     horizontalPodAutoscalerConfig:
