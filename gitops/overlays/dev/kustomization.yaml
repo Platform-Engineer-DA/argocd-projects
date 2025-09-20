@@ -27,3 +27,4 @@ labels:
 patches:
 - path: patch-host.yaml
 - path: patch-rollouts-labels.yaml
+- path: patch-hpa.yaml
