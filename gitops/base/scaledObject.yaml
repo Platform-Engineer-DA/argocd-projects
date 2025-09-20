@@ -12,25 +12,41 @@ spec:
   cooldownPeriod: 30
   pollingInterval: 15
   triggers:
-    # ── CPU ──────────────────────────────────────────────────────────
-    - type: cpu
-      metadata:
-        metricType: Utilization        # ou AverageValue (ex.: "500m")
-        value: "70"              # 70% de uso alvo
-    # ── Memória ─────────────────────────────────────────────────────
-    - type: memory
-      metadata:
-        metricType: Utilization        # ou AverageValue (ex.: "300Mi")
-        value: "75"              # 75% de uso alvo
-    # ---- Agenda: zerar às 18:00 ----
     - type: cron
       metadata:
         timezone: America/Sao_Paulo
         schedule: "0 18 * * *"
         desiredReplicas: "0"
-    # ---- Agenda: subir mínimo às 09:00 (ex.: 2 réplicas) ----
     - type: cron
       metadata:
         timezone: America/Sao_Paulo
         schedule: "0 9 * * *"
         desiredReplicas: "2"
+  advanced:
+    horizontalPodAutoscalerConfig:
+      metrics:
+        - type: Resource
+          resource:
+            name: cpu
+            target:
+              type: Utilization      # nativo do HPA
+              averageUtilization: 70
+        - type: Resource
+          resource:
+            name: memory
+            target:
+              type: Utilization
+              averageUtilization: 75
+      behavior:
+        scaleUp:
+          stabilizationWindowSeconds: 0
+          policies:
+            - type: Pods
+              value: 4
+              periodSeconds: 60
+        scaleDown:
+          stabilizationWindowSeconds: 60
+          policies:
+            - type: Percent
+              value: 50
+              periodSeconds: 60  

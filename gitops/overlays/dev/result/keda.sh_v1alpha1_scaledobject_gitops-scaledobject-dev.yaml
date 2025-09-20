@@ -7,6 +7,34 @@ metadata:
   name: gitops-scaledobject-dev
   namespace: dev
 spec:
+  advanced:
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleDown:
+          policies:
+          - periodSeconds: 60
+            type: Percent
+            value: 50
+          stabilizationWindowSeconds: 60
+        scaleUp:
+          policies:
+          - periodSeconds: 60
+            type: Pods
+            value: 4
+          stabilizationWindowSeconds: 0
+      metrics:
+      - resource:
+          name: cpu
+          target:
+            averageUtilization: 70
+            type: Utilization
+        type: Resource
+      - resource:
+          name: memory
+          target:
+            averageUtilization: 75
+            type: Utilization
+        type: Resource
   cooldownPeriod: 30
   maxReplicaCount: 5
   minReplicaCount: 2
@@ -16,14 +44,6 @@ spec:
     kind: Rollout
     name: gitops-rollout-dev
   triggers:
-  - metadata:
-      metricType: Utilization
-      value: "70"
-    type: cpu
-  - metadata:
-      metricType: Utilization
-      value: "75"
-    type: memory
   - metadata:
       desiredReplicas: "0"
       schedule: 0 18 * * *
