@@ -17,11 +17,11 @@ spec:
     name: gitops-rollout-dev
   triggers:
   - metadata:
-      type: Utilization
+      metricType: Utilization
       value: "70"
     type: cpu
   - metadata:
-      type: Utilization
+      metricType: Utilization
       value: "75"
     type: memory
   - metadata:

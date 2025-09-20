@@ -15,13 +15,13 @@ spec:
     # ── CPU ──────────────────────────────────────────────────────────
     - type: cpu
       metadata:
-        type: Utilization        # ou AverageValue (ex.: "500m")
+        metricType: Utilization        # ou AverageValue (ex.: "500m")
         value: "70"              # 70% de uso alvo
 
     # ── Memória ─────────────────────────────────────────────────────
     - type: memory
       metadata:
-        type: Utilization        # ou AverageValue (ex.: "300Mi")
+        metricType: Utilization        # ou AverageValue (ex.: "300Mi")
         value: "75"              # 75% de uso alvo
 
     # ── Janela de horário (forçar 0 réplicas fora do expediente) ───
