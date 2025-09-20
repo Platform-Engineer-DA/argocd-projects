@@ -12,7 +12,9 @@ spec:
   minReplicasCount: 2
   pollingInterval: 15
   scaleTargetRef:
-    name: rollout
+    apiVersion: argoproj.io/v1alpha1
+    kind: Rollout
+    name: gitops-rollout-dev
   triggers:
   - metadata:
       metricName: http_requests_total
