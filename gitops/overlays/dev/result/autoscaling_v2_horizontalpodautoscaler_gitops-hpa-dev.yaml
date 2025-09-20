@@ -23,6 +23,6 @@ spec:
     type: Resource
   minReplicas: 3
   scaleTargetRef:
-    apiVersion: apps/v1
+    apiVersion: argoproj.io/v1alpha1
     kind: Rollout
     name: gitops-rollout-dev
