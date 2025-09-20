@@ -1,0 +1,19 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaleObject
+metadata:
+  name: scaleobject
+spec:
+  scaleTargetRef:
+    name: rollout
+  minReplicasCount: 2
+  maxReplicasCount: 5
+  cooldownPeriod: 30
+  pollingInterval: 15
+
+  triggers:
+    - type: prometheus
+      metadata:
+        serverAddress: http://prometheus.monitoring.svc.cluster.local:9090
+        metricName: http_requests_total
+        query: sum(rate(http_requests_total{app="gitops"}[2m]))
+        threshold: "100"         
