@@ -7,4 +7,6 @@ resources:
   - namespace.yaml
   - rollout-canary.yaml
   - service.yaml
-  - ingress.yaml  
+  - ingress.yaml
+  - hpa.yaml
+  - scaleObject.yaml  
