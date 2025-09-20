@@ -17,20 +17,20 @@ spec:
     name: gitops-rollout-dev
   triggers:
   - metadata:
-      metricType: Utilization
-      value: "70"
+      metricType: AverageValue
+      value: 70
     type: cpu
   - metadata:
-      metricType: Utilization
-      value: "75"
+      metricType: AverageValue
+      value: 75
     type: memory
   - metadata:
-      desiredReplicas: "0"
+      desiredReplicas: 0
       schedule: 0 18 * * *
       timezone: America/Sao_Paulo
     type: cron
   - metadata:
-      desiredReplicas: "2"
+      desiredReplicas: 2
       schedule: 0 9 * * *
       timezone: America/Sao_Paulo
     type: cron
