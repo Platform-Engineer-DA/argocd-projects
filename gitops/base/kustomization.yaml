@@ -8,5 +8,5 @@ resources:
   - rollout-canary.yaml
   - service.yaml
   - ingress.yaml
-  - hpa.yaml
+  #- hpa.yaml
   - scaledObject.yaml  
