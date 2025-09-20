@@ -7,30 +7,27 @@ spec:
     apiVersion: argoproj.io/v1alpha1
     kind: Rollout 
     name: rollout
-  minReplicasCount: 2
-  maxReplicasCount: 5
+  minReplicaCount: 2
+  maxReplicaCount: 5
   cooldownPeriod: 30
   pollingInterval: 15
   triggers:
     # ── CPU ──────────────────────────────────────────────────────────
     - type: cpu
       metadata:
-        type: Utilization        # ou AverageValue (ex.: "500m")
+        metricType: Utilization        # ou AverageValue (ex.: "500m")
         value: "70"              # 70% de uso alvo
-
     # ── Memória ─────────────────────────────────────────────────────
     - type: memory
       metadata:
-        type: Utilization        # ou AverageValue (ex.: "300Mi")
+        metricType: Utilization        # ou AverageValue (ex.: "300Mi")
         value: "75"              # 75% de uso alvo
-
     # ---- Agenda: zerar às 18:00 ----
     - type: cron
       metadata:
         timezone: America/Sao_Paulo
         schedule: "0 18 * * *"
         desiredReplicas: "0"
-
     # ---- Agenda: subir mínimo às 09:00 (ex.: 2 réplicas) ----
     - type: cron
       metadata:
