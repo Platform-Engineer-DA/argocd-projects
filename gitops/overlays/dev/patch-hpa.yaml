@@ -4,6 +4,6 @@ metadata:
   name: hpa
 spec:
   scaleTargetRef:
-    apiVersion: app/v1 
+    apiVersion: apps/v1 
     kind: Rollout 
-    name: gitps-rollout-dev
+    name: gitops-rollout-dev
