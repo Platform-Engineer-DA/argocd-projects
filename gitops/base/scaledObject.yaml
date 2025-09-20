@@ -24,10 +24,16 @@ spec:
         metricType: Utilization        # ou AverageValue (ex.: "300Mi")
         value: "75"              # 75% de uso alvo
 
-    # ── Janela de horário (forçar 0 réplicas fora do expediente) ───
+    # ---- Agenda: zerar às 18:00 ----
     - type: cron
       metadata:
         timezone: America/Sao_Paulo
-        start: "0 18 * * *"      # 18:00 todo dia
-        end:   "0 9 * * *"       # 09:00 todo dia
+        schedule: "0 18 * * *"
+        desiredReplicas: "0"
+
+    # ---- Agenda: subir mínimo às 09:00 (ex.: 2 réplicas) ----
+    - type: cron
+      metadata:
+        timezone: America/Sao_Paulo
+        schedule: "0 9 * * *"
         desiredReplicas: "2"
