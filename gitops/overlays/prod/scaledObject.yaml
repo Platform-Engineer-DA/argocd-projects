@@ -11,7 +11,7 @@ spec:
   maxReplicaCount: 5
   cooldownPeriod: 30
   pollingInterval: 15
-  triggers: []
+  triggers: [ ]
   advanced:
     horizontalPodAutoscalerConfig:
       metrics:
