@@ -33,7 +33,7 @@ spec:
         app.kubernetes.io/name: gitops
     spec:
       containers:
-      - image: marcoscianci/gitops:dev_17787007386
+      - image: marcoscianci/gitops:dev_17810326491
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
