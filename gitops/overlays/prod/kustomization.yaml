@@ -5,9 +5,10 @@ namespace: prod
 
 resources:
 - ../../base
+- scaledObject.yaml
 
 images:
-- name: marcoscianci/gitops
+- name: myapp
   newName: marcoscianci/gitops
   newTag: dev_17810326491
 

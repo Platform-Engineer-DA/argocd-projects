@@ -5,6 +5,7 @@ namespace: stg
 
 resources:
 - ../../base
+- scaledObject.yaml
 
 images:
 - name: myapp

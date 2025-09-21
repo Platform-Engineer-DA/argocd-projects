@@ -1,0 +1,42 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: scaledobject
+spec:
+  scaleTargetRef:
+    apiVersion: argoproj.io/v1alpha1
+    kind: Rollout 
+    name: rollout
+  minReplicaCount: 0
+  maxReplicaCount: 5
+  cooldownPeriod: 30
+  pollingInterval: 15
+  triggers: []
+  advanced:
+    horizontalPodAutoscalerConfig:
+      metrics:
+        - type: Resource
+          resource:
+            name: cpu
+            target:
+              type: Utilization      # nativo do HPA
+              averageUtilization: 70
+        - type: Resource
+          resource:
+            name: memory
+            target:
+              type: Utilization
+              averageUtilization: 75
+      behavior:
+        scaleUp:
+          stabilizationWindowSeconds: 0
+          policies:
+            - type: Pods
+              value: 4
+              periodSeconds: 60
+        scaleDown:
+          stabilizationWindowSeconds: 60
+          policies:
+            - type: Percent
+              value: 50
+              periodSeconds: 60  
